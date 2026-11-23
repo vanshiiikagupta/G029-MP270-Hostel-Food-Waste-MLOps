@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mp270-svc
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: mp270-api
+
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
