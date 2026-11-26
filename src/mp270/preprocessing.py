@@ -82,7 +82,7 @@ def prepare_features(df):
     df["date_year"] = df["date"].dt.year
     df["date_month"] = df["date"].dt.month
     df["date_day"] = df["date"].dt.day
-    df["date_dayofweek"] = df["date"].dt.dayofweek
+    df["date_dayofweek"] = df["date"].dt.day_of_week
 
     # Remove identifier and original date
     df = df.drop(
