@@ -1,9 +1,21 @@
+# Python environment
 .venv/
+venv/
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
+
+# Environment variables
 .env
+
+# Operating system files
+.DS_Store
+
+# Raw and generated datasets
 data/raw/*.csv
 data/*.csv
+data/processed/
+
+# MLflow generated artifacts
 mlruns/
 mlartifacts/

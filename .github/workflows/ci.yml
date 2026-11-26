@@ -1,4 +1,4 @@
-name: Backend CI
+name: MP270 CI
 
 on:
   push:

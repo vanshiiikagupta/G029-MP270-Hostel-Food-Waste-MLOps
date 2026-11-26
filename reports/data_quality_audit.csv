@@ -1,0 +1,13 @@
+record_id,date,students_registered,attendance_pct,menu_rating,temp_c,cooked_kg,plate_size_cm,meal,hostel,waste_weighed_at_bin,waste_kg,waste_bin_ratio,audit_finding
+R00019,2026-01-04,1089,67,4.3,25.0,373.8,29.4,breakfast,Boys Hostel 1,40.7,400.0,9.828009828009828,Possible 10x scaling error - verify
+R00073,2026-01-12,693,83,4.5,12.4,185.8,23.8,breakfast,Girls Hostel,20.5,206.0,10.048780487804878,Possible 10x scaling error - verify
+R00159,2026-01-28,354,60,2.9,24.5,518.6,23.7,BREAKFAST,Boys Hostel 1,46.5,483.0,10.387096774193548,Possible 10x scaling error - verify
+R00388,2026-03-10,682,48,4.0,38.0,231.3,22.5,breakfast,Boys Hostel 1,40.1,407.0,10.149625935162094,Possible 10x scaling error - verify
+R00507,2026-04-01,752,75,4.2,26.7,94.8,24.6,breakfast,Girls Hostel,27.3,281.0,10.293040293040292,Possible 10x scaling error - verify
+R00523,2026-04-04,101,49,4.4,34.0,380.6,22.3,dinner,Girls Hostel,49.2,489.0,9.939024390243901,Possible 10x scaling error - verify
+R00529,2026-04-06,400,66,4.0,25.9,578.6,26.2,breakfast,Boys Hostel 2,47.0,474.0,10.085106382978724,Possible 10x scaling error - verify
+R00550,2026-04-08,683,54,2.8,31.8,326.2,30.3,breakfast,Boys Hostel 1,43.1,436.0,10.116009280742459,Possible 10x scaling error - verify
+R00594,2026-04-17,162,91,1.9,24.5,166.3,23.6,breakfast,Boys Hostel 2,24.6,246.0,10.0,Possible 10x scaling error - verify
+R00700,2026-05-05,1148,69,1.7,21.6,176.1,24.0,breakfast,Girls Hostel,46.3,460.0,9.935205183585314,Possible 10x scaling error - verify
+R00875,2026-06-09,139,99,1.2,23.6,436.0,30.6,dinner,Boys Hostel 1,39.9,400.0,10.025062656641605,Possible 10x scaling error - verify
+R00108,2026-01-18,261,100,4.6,9.8,124.6,27.6,lunch,Girls Hostel,3.2,4.6,1.4374999999999998,Other unusual ratio - investigate
