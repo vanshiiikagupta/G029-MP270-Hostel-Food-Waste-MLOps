@@ -1,17 +1,19 @@
+import math
+
 from fastapi.testclient import TestClient
 from app.main import app
 
 client = TestClient(app)
 
 valid_data = {
-    "students_registered": 200,
+    "students_registered": 300,
     "attendance_pct": 85,
     "menu_rating": 4,
     "temp_c": 30,
     "cooked_kg": 150,
     "plate_size_cm": 25,
     "meal": "lunch",
-    "hostel": "A"
+    "hostel": "Girls Hostel"
 }
 
 
@@ -37,10 +39,12 @@ def test_invalid_plate_size():
     assert response.status_code == 422
 
 
-def test_model_unavailable():
+def test_valid_prediction():
     response = client.post("/predict", json=valid_data)
 
-    assert response.status_code == 503
-    assert response.json()["detail"] == (
-        "Prediction model is not available yet."
-    )
+    assert response.status_code == 200
+
+    result = response.json()
+    assert "prediction" in result
+    assert isinstance(result["prediction"], (int, float))
+    assert math.isfinite(result["prediction"])
