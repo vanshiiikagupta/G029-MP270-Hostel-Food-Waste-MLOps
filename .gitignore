@@ -1,0 +1,14 @@
+# Python environment
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# MLflow generated artifacts
+mlruns/
+
+# Processed datasets
+data/processed/
