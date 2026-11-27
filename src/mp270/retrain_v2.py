@@ -275,6 +275,15 @@ if promote_v2:
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
 
     with mlflow.start_run(run_name="V2-Registration"):
+        mlflow.log_param("model_version", "v2")
+        mlflow.log_param("training_rows", len(combined_train))
+        mlflow.log_param("later_training_rows", len(later_train))
+        mlflow.log_param("evaluation_rows", len(later_test))
+        mlflow.log_param("data_sha256", data_sha256)
+
+        mlflow.log_metric("v1_MAE", v1_mae)
+        mlflow.log_metric("v2_MAE", v2_mae)
+        mlflow.log_metric("improvement_percent", improvement_pct)
 
         model_info = mlflow.sklearn.log_model(
             sk_model=v2_model,
