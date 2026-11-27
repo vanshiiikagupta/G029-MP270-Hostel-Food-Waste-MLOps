@@ -1,7 +1,9 @@
 
 import os
+import json
 import joblib
 import yaml
+from datetime import datetime, timezone
 import numpy as np
 import pandas as pd
 
@@ -16,6 +18,30 @@ from src.mp270.preprocessing import (
     clean_data,
     prepare_features
 )
+
+# =================================
+# STRUCTURED JSON LOGGING
+# =================================
+
+def log_json(event, **fields):
+    record = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "event": event,
+        **fields
+    }
+
+    log_line = json.dumps(record, allow_nan=False)
+
+    print(log_line)
+
+    os.makedirs("reports", exist_ok=True)
+
+    with open(
+        "reports/monitoring_events.jsonl",
+        "a",
+        encoding="utf-8"
+    ) as log_file:
+        log_file.write(log_line + "\n")
 
 
 # =================================
@@ -173,6 +199,14 @@ psi_df.to_csv(
 )
 
 print("\nPSI report saved: reports/psi_report.csv")
+log_json(
+    "psi_monitoring_completed",
+    psi_values={
+        str(row["feature"]): float(row["PSI"])
+        for _, row in psi_df.iterrows()
+    },
+    most_drifted_feature=str(psi_df.iloc[0]["feature"])
+)
 
 # =================================
 # 5. GENERATE V1 PREDICTIONS
@@ -196,6 +230,13 @@ print("\n========== V1 LATER EVALUATION ==========")
 print("MAE:", round(mae, 4))
 print("RMSE:", round(rmse, 4))
 print("R2:", round(r2, 4))
+log_json(
+    "v1_evaluation_completed",
+    rows=int(len(y_actual)),
+    mae=float(mae),
+    rmse=float(rmse),
+    r2=float(r2)
+)
 
 # =================================
 # 7. BASELINE COMPARISON
@@ -253,6 +294,21 @@ print(hostel_df.to_string(index=False))
 hostel_df.to_csv(
     "reports/mae_by_hostel.csv",
     index=False
+)
+
+log_json(
+    "hostel_mae_completed",
+    results=[
+        {
+            "hostel": str(row["hostel"]),
+            "records": int(row["records"]),
+            "MAE": float(row["MAE"])
+        }
+        for _, row in hostel_df.iterrows()
+    ],
+    worst_served_hostel=str(
+        hostel_df.loc[hostel_df["MAE"].idxmax(), "hostel"]
+    )
 )
 
 # =================================

@@ -1,5 +1,6 @@
 
 import os
+from pathlib import Path
 import hashlib
 import joblib
 import mlflow
@@ -97,7 +98,7 @@ y_test = later_test["waste_kg"]
 # =========================================
 
 v1_model = joblib.load(
-    "models/champion_model.joblib"
+    "models/v1_model.joblib"
 )
 
 v1_predictions = v1_model.predict(X_test)
@@ -176,9 +177,28 @@ else:
 
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
 
-mlflow.set_experiment(
-    "MP270-Hostel-Food-Waste"
-)
+# Person 3 uses a separate experiment and local artifact folder
+experiment_name = "MP270-Hostel-Food-Waste-Person3"
+artifact_root = Path("mlartifacts/person3").resolve()
+
+os.makedirs(artifact_root, exist_ok=True)
+
+client = mlflow.tracking.MlflowClient()
+
+experiment = client.get_experiment_by_name(experiment_name)
+
+if experiment is None:
+    client.create_experiment(
+        name=experiment_name,
+        artifact_location=artifact_root.as_uri()
+    )
+else:
+    if not experiment.artifact_location.startswith("file:"):
+        raise RuntimeError(
+            "Person 3 MLflow experiment has an incompatible artifact location."
+        )
+
+mlflow.set_experiment(experiment_name)
 
 # Fingerprint of original raw training CSV
 sha256 = hashlib.sha256()
@@ -281,7 +301,7 @@ if promote_v2:
     print("\nV2 promoted and saved as champion.")
 
 else:
-    print("\nV1 remains the champion. V2 was not promoted.")
+    print("\nExisting champion remains unchanged. V2 was not promoted.")
 
 
 print("\nReports saved successfully.")
