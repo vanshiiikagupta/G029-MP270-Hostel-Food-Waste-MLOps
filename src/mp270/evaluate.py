@@ -25,9 +25,9 @@ from src.mp270.preprocessing import (
 with open("params.yaml", "r") as file:
     params = yaml.safe_load(file)
 
-model = joblib.load("models/champion_model.joblib")
+model = joblib.load("models/v1_model.joblib")
 
-print("Champion model loaded successfully!")
+print("V1 model loaded successfully!")
 
 # =================================
 # 2. LOAD CORRECTED TRAINING DATA
@@ -135,9 +135,14 @@ def calculate_psi(reference, current, bins=10):
     return float(psi)
 
 
-numeric_columns = X_train_reference.select_dtypes(
-    include=np.number
-).columns.tolist()
+numeric_columns = [
+    "students_registered",
+    "attendance_pct",
+    "menu_rating",
+    "temp_c",
+    "cooked_kg",
+    "plate_size_cm"
+]
 
 psi_results = []
 
