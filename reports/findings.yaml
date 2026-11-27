@@ -1,0 +1,65 @@
+group_id: "G029"
+problem_id: "MP270"
+
+data_issues:
+  leaking_column:
+    present: true
+    column: waste_weighed_at_bin
+
+  unit_mixup:
+    present: false
+    column: null
+    group_value: null
+    factor: null
+
+  sentinel_value:
+    present: false
+    column: null
+    value: null
+    count: null
+
+  duplicate_rows:
+    present: true
+    count: 59
+
+  stuck_sensor:
+    present: false
+    column: null
+    start_date: null
+    end_date: null
+
+  target_typos:
+    present: true
+    count: 11
+
+  spelling_variants:
+    present: true
+    column: meal
+    true_levels: 3
+
+tracking:
+  experiment_name: "MP270-Hostel-Food-Waste"
+  best_run_id: "862fa5bb71054d4fa8e1fd607e7fd7b2"
+  registered_model_name: "MP270-Hostel-Food-Waste-Model"
+  champion_version: null
+
+monitoring:
+  psi:
+    students_registered: null
+    attendance_pct: null
+    menu_rating: null
+    temp_c: null
+    cooked_kg: null
+    plate_size_cm: null
+
+  most_drifted_feature: null
+
+  mae_by_group:
+    'Boys Hostel 1': null
+    'Boys Hostel 2': null
+    'Girls Hostel': null
+
+  worst_served_group: null
+  mae_v1_on_check: null
+  mae_v2_on_check: null
+  decision: null
