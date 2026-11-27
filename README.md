@@ -281,7 +281,16 @@ python -m pytest -q
 - GitHub Actions
 - Pytest
 
-## 14. Conclusion
+## 14. MLflow Data Provenance
+
+The three recent V1 training runs contain verified
+SHA-256 fingerprints of the original training dataset.
+Four earlier experimental runs lack data fingerprints
+because their exact source dataset could not be verified.
+These runs have been preserved without modification
+to maintain the integrity of the experiment history.
+
+## 15. Conclusion
 
 This project implements an end-to-end MLOps workflow for hostel mess food waste prediction. It includes data quality management, reproducible preprocessing, model experimentation, drift monitoring, retraining, model versioning, API development, automated testing, and deployment configuration.
 
