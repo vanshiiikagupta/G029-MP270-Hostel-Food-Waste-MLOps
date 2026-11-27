@@ -41,25 +41,26 @@ tracking:
   experiment_name: "MP270-Hostel-Food-Waste"
   best_run_id: "862fa5bb71054d4fa8e1fd607e7fd7b2"
   registered_model_name: "MP270-Hostel-Food-Waste-Model"
-  champion_version: null
+  champion_version: 5
+
 
 monitoring:
   psi:
-    students_registered: null
-    attendance_pct: null
-    menu_rating: null
-    temp_c: null
-    cooked_kg: null
-    plate_size_cm: null
+    students_registered: 0.030294188007324384
+    attendance_pct: 0.03423646521126042
+    menu_rating: 0.020389995824717424
+    temp_c: 0.037559010197668746
+    cooked_kg: 3.50528665146363
+    plate_size_cm: 0.05434982048373105
 
-  most_drifted_feature: null
+  most_drifted_feature: cooked_kg
 
   mae_by_group:
-    'Boys Hostel 1': null
-    'Boys Hostel 2': null
-    'Girls Hostel': null
+    'Boys Hostel 1': 7.567213311384928
+    'Boys Hostel 2': 24.642136095443053
+    'Girls Hostel': 8.170504730149728
 
-  worst_served_group: null
-  mae_v1_on_check: null
-  mae_v2_on_check: null
-  decision: null
+  worst_served_group: 'Boys Hostel 2'
+  mae_v1_on_check: 13.45193518503325
+  mae_v2_on_check: 6.048226807832014
+  decision: 'PROMOTE V2'
