@@ -2,12 +2,24 @@
 
 ## 1. Project Overview
 
+**Group ID:** G029  
 **Problem ID:** MP270  
 **Project:** Hostel Mess Food Waste Prediction  
 **Location:** Surat, Gujarat, India  
-**Course:** SCSE3040 – MLOps Mini Project
+**Course:** SCSE3040 – MLOps Mini Project  
+**Faculty:** Amit Soni  
+**Batch:** 69
 
-The objective of this project is to predict hostel mess food waste (`waste_kg`) using operational and meal-related features. The solution follows an MLOps workflow covering data quality assessment, preprocessing, model training, experiment tracking, model evaluation, retraining, API development, containerization, and deployment.
+### Team Members
+
+| Name | Enrollment Number |
+|---|---|
+| Shreyanshi Sharma | S24CSEU2596 |
+| Mayank Bijalwan | S24CSEU0269 |
+| Vanshika Gupta | S24CSEU2597 |
+| Sanskar Srivastava | S24CSEU2577 |
+
+The objective of this project is to predict hostel mess food waste (waste_kg) using operational and meal-related features. The solution follows an MLOps workflow covering data quality assessment, preprocessing, model training, experiment tracking, model evaluation, retraining, API development, containerization, and deployment.
 
 ## 2. Problem Statement
 
@@ -25,10 +37,11 @@ Hostel messes often prepare more food than students consume, resulting in food w
 The predictions can help mess administrators make better food preparation decisions.
 
 ## 3. Project Structure
-
 ```text
-MP270-Hostel-Food-Waste/
+G029-MP270-Hostel-Food-Waste-MLOps/
 │
+├── .dvc/
+│   └── config
 ├── data/
 │   ├── raw/
 │   │   ├── train.csv.dvc
@@ -37,7 +50,8 @@ MP270-Hostel-Food-Waste/
 │   └── processed/
 │
 ├── models/
-│   └── champion_model.joblib
+│   ├── model.joblib
+│   └── v1_model.joblib
 │
 ├── reports/
 │   ├── data_quality_audit.csv
@@ -45,6 +59,10 @@ MP270-Hostel-Food-Waste/
 │   ├── psi_report.csv
 │   ├── mae_by_hostel.csv
 │   ├── v1_v2_comparison.csv
+│   ├── monitoring_events.jsonl
+│   └── findings.yaml
+│
+├── predictions/
 │   └── holdout_predictions.csv
 │
 ├── src/
@@ -56,16 +74,27 @@ MP270-Hostel-Food-Waste/
 │       ├── predict_holdout.py
 │       └── api.py
 │
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   └── schemas.py
+│
 ├── tests/
 │   ├── test_preprocessing.py
 │   └── test_api.py
+│
+├── k8s/
+│   ├── deployment.yaml
+│   └── service.yaml
 │
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
 │
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
 ├── params.yaml
-├── findings.yaml
 ├── requirements.txt
 ├── mlflow.db
 └── README.md
@@ -113,6 +142,10 @@ Model parameters are maintained in `params.yaml`.
 
 MLflow is used for experiment tracking and model registration.
 
+- V1 experiment: `MP270-Hostel-Food-Waste`
+- V2 experiment: `MP270-Hostel-Food-Waste-Person3`
+- Champion run ID: `76bcc42f53d54f9e91c0fbf9b93647eb`
+
 Tracked information includes:
 - Model parameters
 - MAE, RMSE, and R² metrics
@@ -125,13 +158,16 @@ Registered model:
 
 The `champion` alias identifies the selected production model.
 
-The champion model was promoted to version 4 following retraining evaluation.
+The champion model was promoted to version 5 following retraining evaluation.
 
 ## 7. Model Monitoring and Retraining
 
 The project evaluates data drift using Population Stability Index (PSI).
 
 Model performance is also evaluated separately for each hostel.
+
+- Most drifted feature: `cooked_kg` (PSI: 3.5053).
+- Worst-served group: Boys Hostel 2 (MAE: 24.6421).
 
 Version 2 retraining uses:
 - The cleaned original training dataset.
@@ -154,7 +190,7 @@ The champion model generates predictions for the holdout dataset.
 
 Output file:
 
-`reports/holdout_predictions.csv`
+`predictions/holdout_predictions.csv`
 
 Required output columns:
 
@@ -197,7 +233,11 @@ Validation rules:
 - `plate_size_cm` must be at least 10.
 - Invalid requests return HTTP 422.
 
-The API uses 1 April 2026 as a fixed reference date because the client request contract does not include a date.
+The API uses 30 March 2026 as a fixed reference date because the client request contract does not include a date.
+
+### JSON Logging
+
+Each successful prediction generates one structured JSON log on stdout using Python's logging module and a JSON formatter. Customer details are not logged.
 
 ### Run the API
 
@@ -223,7 +263,7 @@ The test suite covers:
 
 Current test result: **7 tests passed.**
 
-GitHub Actions runs the automated test suite on pushes and pull requests targeting `main`.
+GitHub Actions runs the automated test suite on every push and pull request.
 
 ## 11. Docker and Kubernetes Deployment
 
@@ -238,6 +278,8 @@ The deployment configuration targets:
 - Health probes: `/health`
 
 The API is designed to run as a containerized service and can be deployed to a Kubernetes cluster.
+
+Final Docker and Kubernetes deployment tests passed, including all three replicas, health checks, predictions and JSON logging.
 
 ## 12. Installation and Setup
 
@@ -289,6 +331,10 @@ Four earlier experimental runs lack data fingerprints
 because their exact source dataset could not be verified.
 These runs have been preserved without modification
 to maintain the integrity of the experiment history.
+
+The earlier V2 registration run lacks complete tracking metadata. The current champion registration contains verified dataset fingerprints and evaluation metrics.
+
+MLflow artifacts are stored locally. The committed Joblib models support inference independently of those artifact locations. DVC has no configured remote, so reproducing training from a fresh clone requires the original instructor-provided datasets or an existing DVC cache.
 
 ## 15. Conclusion
 
