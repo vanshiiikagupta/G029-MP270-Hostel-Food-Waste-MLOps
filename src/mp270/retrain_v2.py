@@ -304,7 +304,7 @@ if promote_v2:
 
     joblib.dump(
         v2_model,
-        "models/champion_model.joblib"
+        "models/model.joblib"
     )
 
     print("\nV2 promoted and saved as champion.")

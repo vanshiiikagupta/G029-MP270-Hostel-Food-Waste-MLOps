@@ -239,7 +239,7 @@ os.makedirs("reports", exist_ok=True)
 
 joblib.dump(
     best_model,
-    "models/champion_model.joblib"
+    "models/model.joblib"
 )
 
 results_df.to_csv(
@@ -248,4 +248,4 @@ results_df.to_csv(
 )
 
 print("\nChampion model saved successfully!")
-print("Location: models/champion_model.joblib")
+print("Location: models/model.joblib")

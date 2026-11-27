@@ -11,7 +11,7 @@ from src.mp270.preprocessing import prepare_features
 # =====================================
 
 model = joblib.load(
-    "models/champion_model.joblib"
+    "models/model.joblib"
 )
 
 print("Champion model loaded successfully!")
@@ -53,17 +53,17 @@ output = pd.DataFrame({
     "prediction": predictions
 })
 
-os.makedirs("reports", exist_ok=True)
+os.makedirs("predictions", exist_ok=True)
 
 output.to_csv(
-    "reports/holdout_predictions.csv",
+    "predictions/holdout_predictions.csv",
     index=False
 )
 
 print("\nHoldout predictions generated!")
 print("Total predictions:", len(output))
 print("Output columns:", list(output.columns))
-print("Saved to: reports/holdout_predictions.csv")
+print("Saved to: predictions/holdout_predictions.csv")
 
 print("\nFirst 5 predictions:")
 print(output.head())
